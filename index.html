@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>For Tanzu ❤️</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <style>
+    body {
+      margin:0;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+      font-family: Arial, sans-serif;
+      background:url("data:image/jpeg;base64,") center/cover no-repeat;
+      position:relative;
+    }
+
+    body::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      backdrop-filter:blur(3px);
+    }
+
+    .box {
+      position:relative;
+      z-index:2;
+      background:rgba(255,255,255,.12);
+      backdrop-filter:blur(10px);
+      padding:40px;
+      border-radius:20px;
+      color:white;
+      text-align:center;
+    }
+
+    #yes {
+      font-size:30px;
+      padding:15px 45px;
+      background:#ff4d6d;
+      color:white;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      margin:20px;
+    }
+
+    #no {
+      position:absolute;
+      font-size:12px;
+      padding:6px 12px;
+      background:grey;
+      color:white;
+      border:none;
+      border-radius:8px;
+    }
+
+    .heart {
+      position:absolute;
+      animation:float 6s linear infinite;
+    }
+
+    @keyframes float {
+      from {transform:translateY(0); opacity:1;}
+      to {transform:translateY(-100vh); opacity:0;}
+    }
+  </style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2023/01/18/audio_6f3a9d7d8e.mp3" type="audio/mp3">
+</audio>
+
+<div class="box">
+  <h1>Will you be my Valentine, Tanzu? ❤️</h1>
+  <button id="yes">YES 💕</button>
+  <button id="no">No</button>
+</div>
+
+<script>
+  emailjs.init("PUT_PUBLIC_KEY_HERE");
+
+  document.getElementById("yes").onclick = function() {
+    emailjs.send("PUT_SERVICE_ID","PUT_TEMPLATE_ID", {
+      message: "Tanzu said YES ❤️"
+    });
+    document.body.innerHTML="<h1 style='color:white;text-align:center;margin-top:40vh;'>She said YES 💖</h1>";
+  };
+
+  const noBtn=document.getElementById("no");
+  noBtn.onmouseover=function(){
+    noBtn.style.left=Math.random()*(window.innerWidth-80)+"px";
+    noBtn.style.top=Math.random()*(window.innerHeight-40)+"px";
+  };
+
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.innerHTML="❤️";
+    h.className="heart";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },300);
+</script>
+
+</body>
+</html>
