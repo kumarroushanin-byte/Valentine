@@ -1,96 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>For Tanzu ❤️</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
-    body{
-      margin:0;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      overflow:hidden;
-      font-family: Arial, sans-serif;
+<title>For Tanzu ❤️</title>
 
-      background:url("tanzu.jpg") center/cover no-repeat;
-      position:relative;
-    }
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:sans-serif;
+    overflow:hidden;
+}
 
-    body::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,0.6);
-      backdrop-filter: blur(3px);
-    }
+/* CARD */
+.card{
+    text-align:center;
+    background:rgba(255,255,255,0.2);
+    padding:40px;
+    border-radius:25px;
+    backdrop-filter: blur(12px);
+    box-shadow:0 0 25px rgba(0,0,0,0.2);
+}
 
-    .box{
-      position:relative;
-      z-index:2;
-      background:rgba(255,255,255,.12);
-      padding:40px;
-      border-radius:20px;
-      text-align:center;
-      color:white;
-    }
+/* HEART */
+.heart{
+    font-size:90px;
+    animation:pump 1s infinite;
+    transition:0.6s;
+}
 
-    #yes{
-      font-size:28px;
-      padding:15px 45px;
-      background:#ff4d6d;
-      border:none;
-      color:white;
-      border-radius:12px;
-      margin:20px;
-    }
+/* pumping animation */
+@keyframes pump{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.25)}
+    100%{transform:scale(1)}
+}
 
-    #no{
-      position:absolute;
-      font-size:12px;
-      padding:6px 12px;
-    }
+/* grow animation */
+.grow{
+    animation:none;
+    transform:scale(2.5);
+}
 
-    .heart{
-      position:absolute;
-      animation:float 6s linear infinite;
-    }
+/* broken */
+.broken{
+    animation:none;
+    transform:scale(1.4);
+}
 
-    @keyframes float{
-      from{transform:translateY(0)}
-      to{transform:translateY(-100vh)}
-    }
-  </style>
+/* buttons */
+.buttons{
+    margin-top:25px;
+}
+
+#yes{
+    font-size:28px;
+    padding:18px 55px;
+    border:none;
+    border-radius:50px;
+    background:#ff2e63;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 6px 15px rgba(0,0,0,0.3);
+}
+
+#no{
+    font-size:12px;
+    padding:6px 12px;
+    margin-left:15px;
+    border:none;
+    border-radius:20px;
+    background:#555;
+    color:white;
+    cursor:pointer;
+}
+
+/* message */
+#msg{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+    color:#ff0055;
+}
+</style>
 </head>
 
 <body>
 
-<!-- Local music -->
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mp3">
-</audio>
+<div class="card">
+    <div id="heart" class="heart">❤️</div>
 
-<div class="box">
-  <h2>Will you be my Valentine, Tanzu? ❤️</h2>
-  <button id="yes" onclick="alert('She said YES ❤️')">YES 💕</button>
-  <button id="no">No</button>
+    <h2>Will you be my Valentine, Tanzu?</h2>
+
+    <div class="buttons">
+        <button id="yes">YES 💖</button>
+        <button id="no">No</button>
+    </div>
+
+    <div id="msg"></div>
 </div>
 
 <script>
-const no=document.getElementById("no");
-no.onmouseover=()=>{
-  no.style.left=Math.random()*window.innerWidth+"px";
-  no.style.top=Math.random()*window.innerHeight+"px";
+const heart = document.getElementById("heart");
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const msg = document.getElementById("msg");
+
+/* YES click */
+yes.onclick = () => {
+    heart.innerHTML = "❤️";
+    heart.classList.add("grow");
+
+    msg.innerHTML = "Yayyy Tanzu said YES ❤️🥰";
+
+    /* open mail automatically */
+    window.location.href =
+    "mailto:maiekaawaz.in@gmail.com?subject=She said YES ❤️&body=Tanzu accepted your Valentine proposal!";
 }
 
-setInterval(()=>{
-  let h=document.createElement("div");
-  h.innerHTML="❤️";
-  h.className="heart";
-  h.style.left=Math.random()*100+"vw";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-},300);
+/* NO click */
+no.onclick = () => {
+    heart.innerHTML = "💔";
+    heart.classList.add("broken");
+
+    msg.innerHTML = "Oh no 💔 Try again!";
+}
+
+/* make NO move randomly */
+no.onmouseover = () => {
+    no.style.position="absolute";
+    no.style.top=Math.random()*80+"vh";
+    no.style.left=Math.random()*80+"vw";
+}
 </script>
 
 </body>
